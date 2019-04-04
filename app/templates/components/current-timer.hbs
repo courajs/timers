@@ -4,12 +4,13 @@
       value={{@timer.name}}
       oninput={{action (mut @timer.name) value="target.value"}}
       onblur={{action (mut this.editing) false}}
+      onchange={{action (mut this.editing) false}}
       {{did-insert this.focusEl}}
     >
   {{~else}}
     <span onclick={{action (mut this.editing) true}}>{{@timer.name}}</span>
   {{~/if~}}
-  : {{@timer.displayDuration}}
+  : {{@timer.displaySeconds}}
 </h1>
 <p>
   <button class="p-2 m-2 border shadow" onclick={{action this.state.toggle @timer}}>

@@ -16,7 +16,7 @@ export default class Timer {
     };
   }
 
-  get displayDuration() {
+  get displaySeconds() {
     let result = '';
     let seconds = this.total;
     if (seconds > 3600) {
@@ -31,5 +31,26 @@ export default class Timer {
     }
 
     return result + `${seconds}s`;
+  }
+
+  get displayMinutes() {
+    let result = '';
+    let seconds = this.total;
+    if (seconds > 3600) {
+      let hours = Math.floor(seconds / 3600);
+      seconds = seconds % 3600;
+      result += `${hours}h `;
+    }
+    if (seconds > 60) {
+      let minutes = Math.floor(seconds / 60);
+      seconds = seconds % 60;
+      result += `${minutes}m `;
+    }
+
+    if (this.total > 60) {
+      return result;
+    } else {
+      return '0m';
+    }
   }
 }
