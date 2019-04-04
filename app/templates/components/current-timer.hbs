@@ -1,3 +1,10 @@
 <h1>
+  <button onclick={{action this.state.toggle @timer}}>
+    {{#if this.state.running}}
+      Pause
+    {{else}}
+      Play
+    {{/if}}
+  </button>
   {{@timer.name}}: {{@timer.displayDuration}}
 </h1>

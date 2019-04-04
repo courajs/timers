@@ -1,0 +1,12 @@
+{{#each this.state.timers as |timer|}}
+  <p>
+    <button onclick={{action this.state.toggle timer}}>
+      {{#if (and this.state.running (eq this.state.current timer))}}
+        Pause
+      {{else}}
+        Play
+      {{/if}}
+    </button>
+    {{timer.name}}
+  </p>
+{{/each}}
