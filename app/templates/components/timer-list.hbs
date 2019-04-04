@@ -1,6 +1,6 @@
 {{#each this.state.timers as |timer|}}
   <p>
-    <button onclick={{action this.state.toggle timer}}>
+    <button class="p-1 m-1 border shadow" onclick={{action this.state.toggle timer}}>
       {{#if (and this.state.running (eq this.state.current timer))}}
         Pause
       {{else}}
@@ -8,5 +8,6 @@
       {{/if}}
     </button>
     {{timer.name}}
+    <button class="p-1 m-1 border shadow text-red" onclick={{action this.state.delTimer timer}}>X</button>
   </p>
 {{/each}}

@@ -17,6 +17,8 @@ export default class State extends Service {
 
     setInterval(() => this.save(), 5000);
     window.addEventListener('beforeunload', () => this.save());
+    window.getState = this.serialize.bind(this);
+    window.setState = this.save.bind(this);
   }
 
   /*
@@ -56,8 +58,11 @@ export default class State extends Service {
     this.timers = timerData.map(d => new Timer(d));
   }
 
-  save() {
-    localStorage['timer-state'] = JSON.stringify(this.serialize());
+  save(state) {
+    if (!state) {
+      state = this.serialize();
+    }
+    localStorage['timer-state'] = JSON.stringify(state);
   }
 
   serialize() {
@@ -69,6 +74,12 @@ export default class State extends Service {
     this.current = t;
     this.timers.push(t);
     this.timers = this.timers;
+    this.save();
+  }
+
+  @action
+  delTimer(t) {
+    this.timers.removeObject(t);
     this.save();
   }
 }

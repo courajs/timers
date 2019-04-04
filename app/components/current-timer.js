@@ -14,4 +14,8 @@ export default class extends Component {
   focusEl(el) {
     el.focus();
   }
+
+  addTime(timer, val) {
+    timer.total += val;
+  }
 }
