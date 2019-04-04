@@ -2,9 +2,9 @@
   <p>
     <button class="p-1 m-1 border shadow" onclick={{action this.state.toggle timer}}>
       {{#if (and this.state.running (eq this.state.current timer))}}
-        Pause
+        {{fa-icon "pause"}}
       {{else}}
-        Play
+        {{fa-icon "play"}}
       {{/if}}
     </button>
     {{timer.name}}

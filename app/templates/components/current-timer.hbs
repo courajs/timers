@@ -14,9 +14,9 @@
 <p>
   <button class="p-2 m-2 border shadow" onclick={{action this.state.toggle @timer}}>
     {{#if this.state.running}}
-      Pause
+      {{fa-icon "pause"}}
     {{else}}
-      Play
+      {{fa-icon "play"}}
     {{/if}}
   </button>
   <button class="p-2 m-2 border shadow" onclick={{action this.addTime @timer (mult 15 -60)}}>&lt;-15m</button>
