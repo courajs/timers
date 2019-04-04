@@ -1,10 +1,22 @@
-<h1>
-  <button onclick={{action this.state.toggle @timer}}>
+<h1 class="p-2">
+  {{#if this.editing}}
+    <input
+      value={{@timer.name}}
+      oninput={{action (mut @timer.name) value="target.value"}}
+      onblur={{action (mut this.editing) false}}
+      {{did-insert this.focusEl}}
+    >
+  {{~else}}
+    <span onclick={{action (mut this.editing) true}}>{{@timer.name}}</span>
+  {{~/if~}}
+  : {{@timer.displayDuration}}
+</h1>
+<h2>
+  <button class="p-2 m-2 border shadow" onclick={{action this.state.toggle @timer}}>
     {{#if this.state.running}}
       Pause
     {{else}}
       Play
     {{/if}}
   </button>
-  {{@timer.name}}: {{@timer.displayDuration}}
-</h1>
+</h2>
