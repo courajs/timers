@@ -69,6 +69,7 @@ export default class State extends Service {
     return this.timers.map(t=>t.serialize());
   }
 
+  @action
   addTimer(name) {
     let t = new Timer({name});
     this.current = t;
@@ -80,6 +81,13 @@ export default class State extends Service {
   @action
   delTimer(t) {
     this.timers.removeObject(t);
+    this.save();
+  }
+
+  @action
+  zeroAll() {
+    this.stop();
+    this.timers.forEach(t => t.total = 0);
     this.save();
   }
 }
