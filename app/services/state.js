@@ -14,7 +14,6 @@ export default class State extends Service {
   constructor() {
     super(...arguments);
     this.load();
-    this.current = this.timers[0];
 
     setInterval(() => this.save(), 5000);
     window.addEventListener('beforeunload', () => this.save());
@@ -58,19 +57,31 @@ export default class State extends Service {
   }
 
   load() {
-    let timerData = JSON.parse(localStorage['timer-state']||'[]');
-    this.timers = timerData.map(d => new Timer(d));
+    if ('timer-state-2' in localStorage) {
+      let {currentIndex, timers} = JSON.parse(localStorage['timer-state-2']);
+      this.timers = timers.map(d => new Timer(d));
+      this.current = this.timers[currentIndex];
+    } else if ('timer-state' in localStorage) {
+      let timerData = JSON.parse(localStorage['timer-state']);
+      this.timers = timerData.map(d => new Timer(d));
+      this.current = this.timers[0];
+    } else {
+      this.timers = [];
+    }
   }
 
   save(state) {
     if (!state) {
       state = this.serialize();
     }
-    localStorage['timer-state'] = JSON.stringify(state);
+    localStorage['timer-state-2'] = JSON.stringify(state);
   }
 
   serialize() {
-    return this.timers.map(t=>t.serialize());
+    return {
+      timers: this.timers.map(t=>t.serialize()),
+      currentIndex: this.timers.indexOf(this.current),
+    };
   }
 
   @action
