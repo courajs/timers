@@ -2,23 +2,38 @@ import {tracked} from '@glimmer/tracking';
 
 export default class Timer {
   @tracked name;
-  @tracked total;
+  @tracked baseSeconds;
+  @tracked runningSeconds = 0;
 
   constructor({name, total}) {
     this.name = name || '';
-    this.total = total || 0;
+    this.baseSeconds = total || 0;
+  }
+
+  zero() {
+    this.baseSeconds = 0;
+    this.runningSeconds = 0;
+  }
+
+  digest() {
+    this.baseSeconds += this.runningSeconds;
+    this.runningSeconds = 0;
   }
 
   serialize() {
     return {
       name: this.name,
-      total: this.total,
+      total: this.seconds,
     };
+  }
+
+  get seconds() {
+    return this.baseSeconds + this.runningSeconds;
   }
 
   get displaySeconds() {
     let result = '';
-    let seconds = this.total;
+    let seconds = this.seconds;
     if (seconds > 3600) {
       let hours = Math.floor(seconds / 3600);
       seconds = seconds % 3600;
@@ -35,7 +50,7 @@ export default class Timer {
 
   get displayMinutes() {
     let result = '';
-    let seconds = this.total;
+    let seconds = this.seconds;
     if (seconds > 3600) {
       let hours = Math.floor(seconds / 3600);
       seconds = seconds % 3600;
@@ -47,7 +62,7 @@ export default class Timer {
       result += `${minutes}m `;
     }
 
-    if (this.total > 60) {
+    if (this.seconds > 60) {
       return result;
     } else {
       return '0m';

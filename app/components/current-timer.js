@@ -16,6 +16,6 @@ export default class extends Component {
   }
 
   addTime(timer, val) {
-    timer.total += val;
+    timer.baseSeconds += val;
   }
 }

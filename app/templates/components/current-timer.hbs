@@ -23,7 +23,7 @@
   <button class="p-2 m-2 border shadow" onclick={{action this.addTime @timer (mult 15 -60)}}>&lt;-15m</button>
   <button class="p-2 m-2 border shadow" onclick={{action this.addTime @timer (mult 5 -60)}}>&lt;-5m</button>
   <button class="p-2 m-2 border shadow" onclick={{action this.addTime @timer -60}}>&lt;-1m</button>
-  <button class="p-2 m-2 border shadow" onclick={{action (mut @timer.total) 0}}>0</button>
+  <button class="p-2 m-2 border shadow" onclick={{action this.state.zero @timer}}>0</button>
   <button class="p-2 m-2 border shadow" onclick={{action this.addTime @timer 60}}>1m-&gt;</button>
   <button class="p-2 m-2 border shadow" onclick={{action this.addTime @timer (mult 5 60)}}>5m-&gt;</button>
   <button class="p-2 m-2 border shadow" onclick={{action this.addTime @timer (mult 15 60)}}>15m-&gt;</button>
