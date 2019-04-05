@@ -9,6 +9,8 @@ export default class State extends Service {
   @tracked current;
   @tracked running = false;
   clearToken = null;
+  prevTotal;
+  startTime;
 
   constructor() {
     super(...arguments);
@@ -41,14 +43,18 @@ export default class State extends Service {
   start(timer) {
     this.stop();
     this.current = timer;
+    this.prevTotal = timer.total;
+    this.startTime = new Date();
     this.clearToken = setInterval(() => {
-      this.current.total++;
+      this.current.total = this.prevTotal + seconds(this.startTime, new Date());
     }, 1000);
     this.running = true;
   }
 
   stop() {
     clearInterval(this.clearToken);
+    this.prevTotal = null;
+    this.startTime = null;
     this.clearToken = null;
     this.running = false;
   }
@@ -90,4 +96,8 @@ export default class State extends Service {
     this.timers.forEach(t => t.total = 0);
     this.save();
   }
+}
+
+function seconds(from, to) {
+  return Math.floor((to - from) / 1000);
 }
